@@ -1,5 +1,5 @@
 import MongoDB from "mongodb"
-import { getUsers, getusers } from "../db/database.mjs"
+import { getUsers } from "../db/database.mjs"
 
 const ObjectId = MongoDB.ObjectId
 
@@ -17,4 +17,5 @@ export async function createUser(user) {
 function mapOptionalUser(user) {
     return user ? { ...user, id: user._id.toString() } : user
 }
+
 
