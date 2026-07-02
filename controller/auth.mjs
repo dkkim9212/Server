@@ -26,8 +26,20 @@ export async function signup(req, res) {
 
 // 로그인
 export async function login(req, res) {
-    
-}
+    const { userid, password } = req.body
+    const user = await authRepository.findByUserid(userid)
+    if(user){
+        const isVallidPassword = await bcrypt.compare(password, user.password)
+        if(!isVallidPassword){
+            return res.status(401).json({message: "아이디 또는 비밀번호 확인"})
+        }
+        const token = await createJwtToken(user.id)
+        res.status(200).json({ token, user})
+    }else{
+        if(!isVallidPassword){
+            return res.status(401).json({message: "아이디 또는 비밀번호 확인"})
+        }
+}}
 
 // 로그인 검증
 export async function me(req, res) {
